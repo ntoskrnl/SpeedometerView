@@ -18,4 +18,4 @@ Minimal Android SDK version: 9 (Android 2.3)
 - Colored value ranges
 - Animation of arrow (*requires Android API level 11+*)
 
-Download: https://github.com/ntoskrnl/SpeedometerView/releases/tag/SpeedometerView-v1.0
+Download: [SpeedometerView-v1.0](https://github.com/ntoskrnl/SpeedometerView/releases/tag/SpeedometerView-v1.0)
