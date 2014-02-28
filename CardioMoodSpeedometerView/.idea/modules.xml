@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/CardioMoodSpeedometerView.iml" filepath="$PROJECT_DIR$/CardioMoodSpeedometerView.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SpeedometerView/SpeedometerView.iml" filepath="$PROJECT_DIR$/SpeedometerView/SpeedometerView.iml" />
+    </modules>
+  </component>
+</project>
+

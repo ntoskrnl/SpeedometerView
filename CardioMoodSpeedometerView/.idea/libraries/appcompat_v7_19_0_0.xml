@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="appcompat-v7-19.0.0">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/SpeedometerView/build/exploded-bundles/ComAndroidSupportAppcompatV71900.aar/classes.jar!/" />
+      <root url="file://$PROJECT_DIR$/SpeedometerView/build/exploded-bundles/ComAndroidSupportAppcompatV71900.aar/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
