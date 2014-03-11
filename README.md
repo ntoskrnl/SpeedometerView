@@ -1,14 +1,13 @@
-SpeedometerView
-===============
+# SpeedometerView
 
 Simple speedometer-like gauge with needle for Android.
 
 ![speedometerview-v1](https://f.cloud.github.com/assets/1446492/2292440/175bd3a8-a059-11e3-8f1e-67624fc92349.png)
 
-**Download:** [SpeedometerView-v1.0](https://github.com/ntoskrnl/SpeedometerView/releases/tag/SpeedometerView-v1.0)
+**Download:** [SpeedometerView-v1.0.1](https://github.com/ntoskrnl/SpeedometerView/releases/tag/SpeedometerView-v1.0.1)
 
-Usage
-=====
+## Usage
+
 
 In your layout xml-file add SpeedometerView as shown:
 
@@ -48,8 +47,15 @@ Configure SpeedometerView:
 
 ```
 
-Version History
-===============
+## Version History
+
+**SpeedometerView 1.0.1**
+
+- added attribute labelTextSize
+- text is drawn in dp (looks the same on all screens now)
+- fixed needle artifact
+ 
+Download: [SpeedometerView-v1.0.1](https://github.com/ntoskrnl/SpeedometerView/releases/tag/SpeedometerView-v1.0.1)
 
 **SpeedometerView 1.0**
 
