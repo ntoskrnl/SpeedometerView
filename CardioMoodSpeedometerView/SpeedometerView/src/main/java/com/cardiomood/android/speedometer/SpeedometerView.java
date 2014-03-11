@@ -13,7 +13,6 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 import android.os.Build;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 
 import java.util.ArrayList;
@@ -33,6 +32,7 @@ public class SpeedometerView extends View {
     public static final double DEFAULT_MAX_SPEED = 100.0;
     public static final double DEFAULT_MAJOR_TICK_STEP = 20.0;
     public static final int DEFAULT_MINOR_TICKS = 1;
+    public static final int DEFAULT_LABEL_TEXT_SIZE_DP = 12;
 
     private double maxSpeed = DEFAULT_MAX_SPEED;
     private double speed = 0;
@@ -50,17 +50,22 @@ public class SpeedometerView extends View {
     private Paint ticksPaint;
     private Paint txtPaint;
     private Paint colorLinePaint;
+    private int labelTextSize;
 
     private Bitmap mMask;
 
     public SpeedometerView(Context context) {
         super(context);
         init();
+
+        float density = getResources().getDisplayMetrics().density;
+        setLabelTextSize(Math.round(DEFAULT_LABEL_TEXT_SIZE_DP * density));
     }
 
     public SpeedometerView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
+        float density = getResources().getDisplayMetrics().density;
         TypedArray attributes = context.getTheme().obtainStyledAttributes(
                 attrs,
                 R.styleable.SpeedometerView,
@@ -70,6 +75,7 @@ public class SpeedometerView extends View {
             // read attributes
             setMaxSpeed(attributes.getFloat(R.styleable.SpeedometerView_maxSpeed, (float) DEFAULT_MAX_SPEED));
             setSpeed(attributes.getFloat(R.styleable.SpeedometerView_speed, 0));
+            setLabelTextSize(attributes.getDimensionPixelSize(R.styleable.SpeedometerView_labelTextSize, Math.round(DEFAULT_LABEL_TEXT_SIZE_DP * density)));
         } finally {
             attributes.recycle();
         }
@@ -122,7 +128,6 @@ public class SpeedometerView extends View {
                 Double value = (Double) animation.getAnimatedValue();
                 if (value != null)
                     setSpeed(value);
-                Log.d(TAG, "setSpeed(): onAnumationUpdate() -> value = " + value);
             }
         });
         va.start();
@@ -188,6 +193,18 @@ public class SpeedometerView extends View {
         invalidate();
     }
 
+    public int getLabelTextSize() {
+        return labelTextSize;
+    }
+
+    public void setLabelTextSize(int labelTextSize) {
+        this.labelTextSize = labelTextSize;
+        if (txtPaint != null) {
+            txtPaint.setTextSize(labelTextSize);
+            invalidate();
+        }
+    }
+
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
@@ -249,18 +266,19 @@ public class SpeedometerView extends View {
 
     private void drawNeedle(Canvas canvas) {
         RectF oval = getOval(canvas, 1);
-        float radius = oval.width()*0.35f;
+        float radius = oval.width()*0.35f + 10;
+        RectF smallOval = getOval(canvas, 0.2f);
 
         float angle = 10 + (float) (getSpeed()/ getMaxSpeed()*160);
         canvas.drawLine(
-                (float) (oval.centerX() + 0),
-                (float) (oval.centerY() - 0),
+                (float) (oval.centerX() + Math.cos((180 - angle) / 180 * Math.PI) * smallOval.width()*0.5f),
+                (float) (oval.centerY() - Math.sin(angle / 180 * Math.PI) * smallOval.width()*0.5f),
                 (float) (oval.centerX() + Math.cos((180 - angle) / 180 * Math.PI) * (radius)),
                 (float) (oval.centerY() - Math.sin(angle / 180 * Math.PI) * (radius)),
                 needlePaint
         );
 
-        RectF smallOval = getOval(canvas, 0.2f);
+
         canvas.drawArc(smallOval, 180, 180, true, backgroundPaint);
     }
 
@@ -342,18 +360,6 @@ public class SpeedometerView extends View {
         return oval;
     }
 
-    private RectF getOval(float w, float h) {
-        RectF oval;
-        final float canvasWidth = w - getPaddingLeft() - getPaddingRight();
-        final float canvasHeight = h - getPaddingTop() - getPaddingBottom();
-        if (canvasHeight*2 >= canvasWidth) {
-            oval = new RectF(0, 0, canvasWidth, canvasWidth);
-        } else {
-            oval = new RectF(0, 0, canvasHeight*2, canvasHeight*2);
-        }
-        return oval;
-    }
-
     private void drawBackground(Canvas canvas) {
         RectF oval = getOval(canvas, 1);
         canvas.drawArc(oval, 180, 180, true, backgroundPaint);
@@ -381,7 +387,7 @@ public class SpeedometerView extends View {
 
         txtPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         txtPaint.setColor(Color.WHITE);
-        txtPaint.setTextSize(18);
+        txtPaint.setTextSize(labelTextSize);
         txtPaint.setTextAlign(Paint.Align.CENTER);
 
         mMask = BitmapFactory.decodeResource(getResources(), R.drawable.spot_mask);

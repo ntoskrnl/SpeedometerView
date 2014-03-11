@@ -3,5 +3,6 @@
     <declare-styleable name="SpeedometerView">
         <attr name="maxSpeed" format="float" />
         <attr name="speed" format="float"/>
+        <attr name="labelTextSize" format="dimension" />
      </declare-styleable>
 </resources>
