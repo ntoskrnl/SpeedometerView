@@ -1,4 +1,7 @@
-# SpeedometerView
+# SpeedometerView -- DEPRECATED!!!
+
+This project is deprecated and no longer maintained.
+The contents were moved to another library, which is available here: https://github.com/ntoskrnl/AndroidWidgets 
 
 Simple speedometer-like gauge with needle for Android.
 
